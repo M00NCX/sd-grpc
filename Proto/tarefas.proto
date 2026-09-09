@@ -20,7 +20,7 @@ message Tarefa {
     int32 cpu = 8;
 }
 
-ENUM STATUS {
+enum STATUS {
     AGUARDANDO = 0;
     PROCESSANDO = 1;
     FINALIZADA = 2;
@@ -40,7 +40,7 @@ message Request_Listar {
 }
 
 message Lista {
-    repeated Tarefa tarefas = 1
+    repeated Tarefa tarefas = 1;
 }
 
 message Request_Atualizar {

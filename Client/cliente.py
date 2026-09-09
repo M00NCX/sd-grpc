@@ -5,9 +5,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # não estava reconhecendo o pacote, então adicionei o caminho do diretório pai ao sys.path
 import tarefas_pb2
 import tarefas_pb2_grpc
-
-channel = grpc.insecure_channel('localhost:50051')
-stub = tarefas_pb2_grpc.TarefaServiceStub(channel)
+# essa parte abaixo coloquei direto no main, como no exemplo, mas deixei comentada aqui para referência da documentação
+# channel = grpc.insecure_channel('localhost:50051')
+# stub = tarefas_pb2_grpc.TarefaServiceStub(channel)
 
 def criarTarefa(stub):
     nome = input("Digite o nome da tarefa: ")
@@ -69,7 +69,7 @@ def atualizarTarefa(stub):
     if response.id:
         print(f"Tarefa atualizada com sucesso: {response.id}")
     else:
-        print("Erro ao atualizar a tarefa. Verifique se o ID está correto.")
+        print("Erro ao atualizar a tarefa.")
         
 def deletarTarefa(stub):
     tarefaID = input("Digite o ID da tarefa que deseja deletar: ")
@@ -83,29 +83,31 @@ def deletarTarefa(stub):
         print("Erro ao deletar a tarefa.")
         
 def main():
+    with grpc.insecure_channel('localhost:50051') as channel:
+        stub = tarefas_pb2_grpc.TarefaServiceStub(channel)
         
-    while True:
-        print("\nEscolha uma opção:")
-        print("1. Criar Tarefa")
-        print("2. Listar Tarefas")
-        print("3. Atualizar Tarefa")
-        print("4. Deletar Tarefa")
-        print("5. Sair")
-        
-        escolha = input("Digite o número da opção desejada: ")
-        
-        if escolha == '1':
-            criarTarefa(stub)
-        elif escolha == '2':
-            listarTarefas(stub)
-        elif escolha == '3':
-            atualizarTarefa(stub)
-        elif escolha == '4':
-            deletarTarefa(stub)
-        elif escolha == '5':
-            break
-        else:
-            print("Opção inválida. Tente novamente.")
+        while True:
+            print("\nEscolha uma opção:")
+            print("1. Criar Tarefa")
+            print("2. Listar Tarefas")
+            print("3. Atualizar Tarefa")
+            print("4. Deletar Tarefa")
+            print("5. Sair")
+            
+            escolha = input("Digite o número da opção desejada: ")
+            
+            if escolha == '1':
+                criarTarefa(stub)
+            elif escolha == '2':
+                listarTarefas(stub)
+            elif escolha == '3':
+                atualizarTarefa(stub)
+            elif escolha == '4':
+                deletarTarefa(stub)
+            elif escolha == '5':
+                break
+            else:
+                print("Opção inválida. Tente novamente.")
                 
 if __name__ == '__main__':
     main()

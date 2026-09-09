@@ -29,3 +29,6 @@ class TarefaService(tarefas_pb2_grpc.TarefaServiceServicer):
         server.start()
         print("Servidor gRPC na port 50051.")
         server.wait_for_termination()
+
+    if __name__ == '__main__':
+        serve()

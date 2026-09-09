@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package tarefas;
+
+service TarefaService{
+    rpc Criar(Request_Criar) returns (Tarefa) {}
+    rpc Listar(Request_Listar) returns (Lista) {}
+    rpc Atualizar(Request_Atualizar) returns (Tarefa) {}
+    rpc Deletar(Request_Deletar) returns (Delete) {}
+}
+
+message Tarefa {
+    string id = 1;
+    string nome = 2;
+    string descricao = 3;
+    STATUS status = 4;
+    string data_limite = 5;
+    string responsavel = 6;
+    int32 memoria = 7;
+    int32 cpu = 8;
+}
+
+ENUM STATUS {
+    AGUARDANDO = 0;
+    PROCESSANDO = 1;
+    FINALIZADA = 2;
+}
+
+message Request_Criar {
+    string nome = 1;
+    string descricao = 2;
+    STATUS status = 3;
+    string data_limite = 4;
+    string responsavel = 5;
+    int32 memoria = 6;
+    int32 cpu = 7;
+}
+
+message Request_Listar {
+}
+
+message Lista {
+    repeated Tarefa tarefas = 1
+}
+
+message Request_Atualizar {
+    string id = 1;
+    string nome = 2;
+    string descricao = 3;
+    STATUS status = 4;
+    string data_limite = 5;
+    string responsavel = 6;
+    int32 memoria = 7;
+    int32 cpu = 8;
+}
+
+message Request_Deletar {
+    string id = 1;
+}
+
+message Delete {
+    bool deletado = 1;
+    string mensagem = 2;
+}

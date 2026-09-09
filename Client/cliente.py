@@ -41,7 +41,7 @@ def listarTarefas(stub):
     
     print("Lista de Tarefas:")
     for tarefa in response.tarefas:
-        print(f"ID: {tarefa.id}, Nome: {tarefa.nome}, Status: {tarefa.status.name(tarefa.status)}, Data Limite: {tarefa.data_limite}, Responsável: {tarefa.responsavel}, Memória: {tarefa.memoria}MB, CPU: {tarefa.cpu} núcleos")
+        print(f"ID: {tarefa.id}, Nome: {tarefa.nome}, Status: {tarefa.status}, Data Limite: {tarefa.data_limite}, Responsável: {tarefa.responsavel}, Memória: {tarefa.memoria}MB, CPU: {tarefa.cpu} núcleos")
         
 def atualizarTarefa(stub):
     tarefaID = input("Digite o ID da tarefa que deseja atualizar: ")
@@ -77,13 +77,16 @@ def deletarTarefa(stub):
     request = tarefas_pb2.Request_Deletar(id=tarefaID)
     response = stub.Deletar(request)
     
-    if response.id:
-        print(f"Tarefa deletada com sucesso: {response.id}")
+    if response.deletado:
+        print(f"{response.mensagem}")
     else:
         print("Erro ao deletar a tarefa.")
         
 def main():
-    with grpc.insecure_channel('localhost:50051') as channel:
+    host = sys.argv[1] if len(sys.argv) > 1 else 'localhost'
+    port = sys.argv[2] if len(sys.argv) > 2 else '50051'
+
+    with grpc.insecure_channel(f'{host}:{port}') as channel:
         stub = tarefas_pb2_grpc.TarefaServiceStub(channel)
         
         while True:

@@ -13,19 +13,19 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.define "servidor" do |servidor|
-    servidor.vm.box = "bento/ubuntu-24.04"
+    servidor.vm.box = "ubuntu/jammy64"
     servidor.vm.network "private_network", ip: "192.168.56.10"
     servidor.vm.provision "shell", inline: "apt-get update -y && apt-get install -y python3 python3-pip && pip3 install grpcio grpcio-tools"
   end
 
     config.vm.define "cliente1" do |cliente1|
-    cliente1.vm.box = "bento/ubuntu-24.04"
+    cliente1.vm.box = "ubuntu/jammy64"
     cliente1.vm.network "private_network", ip: "192.168.56.11"
     cliente1.vm.provision "shell", inline: "apt-get update -y && apt-get install -y python3 python3-pip && pip3 install grpcio grpcio-tools"
   end
 
     config.vm.define "cliente2" do |cliente2|
-    cliente2.vm.box = "bento/ubuntu-24.04"
+    cliente2.vm.box = "ubuntu/jammy64"
     cliente2.vm.network "private_network", ip: "192.168.56.12"
     cliente2.vm.provision "shell", inline: "apt-get update -y && apt-get install -y python3 python3-pip && pip3 install grpcio grpcio-tools"
   end

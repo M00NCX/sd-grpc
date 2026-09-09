@@ -12,6 +12,8 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
+
+  # mudei pra jammy porque já tinha anteriormente
   config.vm.define "servidor" do |servidor|
     servidor.vm.box = "ubuntu/jammy64"
     servidor.vm.network "private_network", ip: "192.168.56.10"

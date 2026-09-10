@@ -2,7 +2,7 @@ import json
 import grpc
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(_file_))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # não estava reconhecendo o pacote, então adicionei o caminho do diretório pai ao sys.path
 import tarefas_pb2
 import tarefas_pb2_grpc
@@ -10,11 +10,7 @@ import tarefas_pb2_grpc
 # channel = grpc.insecure_channel('localhost:50051')
 # stub = tarefas_pb2_grpc.TarefaServiceStub(channel)
 
-<<<<<<< HEAD
 TAREFAS = os.path.join(os.path.dirname(__file__), 'Tarefas')
-=======
-TAREFAS = os.path.join(os.path.dirname(_file_), 'Tarefas')
->>>>>>> a44394f65ca82d5587ba21415c1377b9c636a268
 os.makedirs(TAREFAS, exist_ok=True)
 
 def salvarTarefaLocal(tarefaID: str, tarefa: dict) -> str:
@@ -140,5 +136,5 @@ def main():
             else:
                 print("Opção inválida. Tente novamente.")
                 
-if _name_ == '_main_':
+if __name__ == '__main__':
     main()

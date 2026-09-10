@@ -1,7 +1,7 @@
 import grpc
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(_file_))))
 # não estava reconhecendo o pacote, então adicionei o caminho do diretório pai ao sys.path
 import tarefas_pb2
 import tarefas_pb2_grpc
@@ -39,9 +39,9 @@ def listarTarefas(stub):
         print("Nenhuma tarefa encontrada.")
         return
     
-    print("Lista de Tarefas:")
+    print("\nLista de Tarefas:")
     for tarefa in response.tarefas:
-        print(f"ID: {tarefa.id}, Nome: {tarefa.nome}, Status: {tarefa.status}, Data Limite: {tarefa.data_limite}, Responsável: {tarefa.responsavel}, Memória: {tarefa.memoria}MB, CPU: {tarefa.cpu} núcleos")
+        print(f"\nID: {tarefa.id} \n Nome: {tarefa.nome}\n Status: {tarefa.status}\n Data Limite: {tarefa.data_limite}\n Responsável: {tarefa.responsavel}\n Memória: {tarefa.memoria}MB\n CPU: {tarefa.cpu} núcleos")
         
 def atualizarTarefa(stub):
     tarefaID = input("Digite o ID da tarefa que deseja atualizar: ")
@@ -99,6 +99,7 @@ def main():
             
             escolha = input("Digite o número da opção desejada: ")
             
+            
             if escolha == '1':
                 criarTarefa(stub)
             elif escolha == '2':
@@ -112,5 +113,5 @@ def main():
             else:
                 print("Opção inválida. Tente novamente.")
                 
-if __name__ == '__main__':
+if _name_ == '_main_':
     main()

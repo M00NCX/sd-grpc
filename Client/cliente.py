@@ -1,3 +1,4 @@
+import json
 import grpc
 import sys
 import os
@@ -8,6 +9,15 @@ import tarefas_pb2_grpc
 # essa parte abaixo coloquei direto no main, como no exemplo, mas deixei comentada aqui para referência da documentação
 # channel = grpc.insecure_channel('localhost:50051')
 # stub = tarefas_pb2_grpc.TarefaServiceStub(channel)
+
+TAREFAS = os.path.join(os.path.dirname(_file_), 'Tarefas')
+os.makedirs(TAREFAS, exist_ok=True)
+
+def salvarTarefaLocal(tarefaID: str, tarefa: dict) -> str:
+    caminho = os.path.join(TAREFAS, f"{tarefaID}.json")
+    with open(caminho, 'w', encoding='utf-8') as arquvivo:
+        json.dump(tarefa, arquvivo, ensure_ascii=False, indent=4)
+
 
 def criarTarefa(stub):
     nome = input("Digite o nome da tarefa: ")
@@ -29,8 +39,20 @@ def criarTarefa(stub):
     )
 
     response = stub.Criar(request)
+    tarefa = {
+        "id": response.id,
+        "nome": nome,
+        "descricao": descricao,
+        "status": status,
+        "data_limite": data_limite,
+        "responsavel": responsavel,
+        "memoria": memoria,
+        "cpu": cpu
+    }
+    caminho = salvarTarefaLocal(response.id, tarefa)
     print(f"Tarefa criada com ID: {response.id}")
-    
+     
+        
 def listarTarefas(stub):
     request = tarefas_pb2.Request_Listar()
     response = stub.Listar(request)
@@ -73,7 +95,8 @@ def atualizarTarefa(stub):
         
 def deletarTarefa(stub):
     tarefaID = input("Digite o ID da tarefa que deseja deletar: ")
-    
+    caminho = os.path.join(TAREFAS, f"{tarefaID}.json")
+    os.remove(caminho) if os.path.exists(caminho) else None
     request = tarefas_pb2.Request_Deletar(id=tarefaID)
     response = stub.Deletar(request)
     
